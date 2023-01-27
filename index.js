@@ -6,7 +6,7 @@ const bot = new TelegramApi(token, {polling: true})
 
 
 const start = () => {
-    bot.on('message',async msg => {
+    bot.on('message',  msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
         const chatFirstName = msg.from.first_name;
@@ -37,7 +37,7 @@ const start = () => {
             return bot.sendMessage(chatId, `${textStart}`)
         }
         if (text === '/help') {
-            return bot.sendMessage(chatId, `${textHelp}`)
+           return bot.sendMessage(chatId, `${textHelp}`)
         }
         // чтоб не юзали в лс бота
         if(chatTypeBot === 'private' && text === '/elo@Elo_up_bot'){
@@ -74,16 +74,9 @@ const start = () => {
         if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
           return  bot.sendMessage(chatId, `${textHelp}`)
         } 
-           
-        
-          
+              
     })
-  bot.on('callback_query', msg =>{
-    const data = msg.data;
-    const chatId = msg.chat.id;
-    console.log(msg)
     
-  })
 }
 
 start()
