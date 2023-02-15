@@ -39,6 +39,25 @@ const start = () => {
         if (text === '/help') {
            return bot.sendMessage(chatId, `${textHelp}`)
         }
+       // команды группы
+       if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
+        return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на ${eloNumber} elo. \n Теперь скилл равен ${emojiChat} elo. \n Ты занимаешь ${emojiChat} место в топе \n Следующая попытка завтра!`)
+      } 
+      if (chatTypeBot !== 'private' && text === '/lvl@Elo_up_bot'){
+        return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ${emojiChat}`)
+      } 
+      if (chatTypeBot !== 'private' && text === '/top_elo@Elo_up_bot'){
+        return  bot.sendMessage(chatId, `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`)
+      } 
+      if (chatTypeBot !== 'private' && text === '/global_top@Elo_up_bot'){
+        return  bot.sendMessage(chatId, "эта команда работает только в лс бота!")
+      } 
+      if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
+        return  bot.sendMessage(chatId, `${textHelp}`)
+      } 
+       
+    
+
         // чтоб не юзали в лс бота
         if(chatTypeBot === 'private' && text === '/elo@Elo_up_bot'){
            return bot.sendMessage(chatId, `${DisTextBot}`)
@@ -58,22 +77,7 @@ const start = () => {
         if (chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top') {
             return bot.sendMessage(chatId, 'в разработке')
         }
-        // команды группы
-        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
-          return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на ${eloNumber} elo. \n Теперь скилл равен ${emojiChat} elo. \n Ты занимаешь ${emojiChat} место в топе \n Следующая попытка завтра!`)
-        } 
-        if (chatTypeBot !== 'private' && text === '/lvl@Elo_up_bot'){
-          return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ${emojiChat}`)
-        } 
-        if (chatTypeBot !== 'private' && text === '/top_elo@Elo_up_bot'){
-          return  bot.sendMessage(chatId, `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`)
-        } 
-        if (chatTypeBot !== 'private' && text === '/global_top@Elo_up_bot'){
-          return  bot.sendMessage(chatId, "эта команда работает только в лс бота!")
-        } 
-        if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
-          return  bot.sendMessage(chatId, `${textHelp}`)
-        } 
+        
               
     })
     
