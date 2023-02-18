@@ -6,7 +6,7 @@ const bot = new TelegramApi(token, {polling: true})
 
 
 const start = () => {
-    bot.on('message',  msg => {
+    bot.on('message', msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
         const chatFirstName = msg.from.first_name;
@@ -14,11 +14,15 @@ const start = () => {
         const chatType = msg.chat.type;
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
-         // получение данных 
-        const chats = {}
+         // константы текста
+        var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
+        var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
+        const DisTextBot = 'Попробуй эту команду в чате или группе!';
+        // получение данных 
+        const chats = {};
         console.log(msg)
         //  game
-       let minysORplus = Math.ceil(Math.random() * 2)
+       let minysORplus = Math.ceil(Math.random() * 2);
        let upAndDown;
        chats[chatId] = minysORplus;
       if (minysORplus === 1){
@@ -26,13 +30,7 @@ const start = () => {
       } else {
         upAndDown = "уменьшился"
       }
-    // константы текста
-        const emojiChat = `❗`;
-        var textStart = `Привет! я бот для чатов(групп) \n  \n ${emojiChat}Бот работает только в чатах. \n ${emojiChat} Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ${emojiChat}Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`
-        var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`
-        const eloNumber = 25;
-       const DisTextBot = 'Попробуй эту команду в чате или группе!'
- 
+
         if (text === '/start') {
             return bot.sendMessage(chatId, `${textStart}`)
         }
@@ -41,10 +39,10 @@ const start = () => {
         }
        // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
-        return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на ${eloNumber} elo. \n Теперь скилл равен ${emojiChat} elo. \n Ты занимаешь ${emojiChat} место в топе \n Следующая попытка завтра!`)
+        return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ❗ elo. \n Ты занимаешь ❗ место в топе \n Следующая попытка завтра!`)
       } 
       if (chatTypeBot !== 'private' && text === '/lvl@Elo_up_bot'){
-        return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ${emojiChat}`)
+        return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ❗`)
       } 
       if (chatTypeBot !== 'private' && text === '/top_elo@Elo_up_bot'){
         return  bot.sendMessage(chatId, `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`)
@@ -55,9 +53,7 @@ const start = () => {
       if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
         return  bot.sendMessage(chatId, `${textHelp}`)
       } 
-       
-    
-
+          
         // чтоб не юзали в лс бота
         if(chatTypeBot === 'private' && text === '/elo@Elo_up_bot'){
            return bot.sendMessage(chatId, `${DisTextBot}`)
