@@ -18,6 +18,8 @@ const start = () => {
         var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
         var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
         const DisTextBot = 'Попробуй эту команду в чате или группе!';
+        const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`
+        const textPrivate = 'Я работаю только в чатах(группах)'
         // получение данных 
         const chats = {};
         console.log(msg)
@@ -25,18 +27,10 @@ const start = () => {
        let minysORplus = Math.ceil(Math.random() * 2);
        let upAndDown;
        chats[chatId] = minysORplus;
-      if (minysORplus === 1){
-        upAndDown = "увеличился"
-      } else {
-        upAndDown = "уменьшился"
-      }
-
-        if (text === '/start') {
-            return bot.sendMessage(chatId, `${textStart}`)
-        }
-        if (text === '/help') {
-           return bot.sendMessage(chatId, `${textHelp}`)
-        }
+    
+      minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
+        // команды старта
+        text === '/start' ? bot.sendMessage(chatId, `${textStart}`) : text === '/help' ? bot.sendMessage(chatId, `${textHelp}`) : "eror";
        // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
         return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ❗ elo. \n Ты занимаешь ❗ место в топе \n Следующая попытка завтра!`)
@@ -45,36 +39,21 @@ const start = () => {
         return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ❗`)
       } 
       if (chatTypeBot !== 'private' && text === '/top_elo@Elo_up_bot'){
-        return  bot.sendMessage(chatId, `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`)
+        return  bot.sendMessage(chatId, textTop10)
       } 
       if (chatTypeBot !== 'private' && text === '/global_top@Elo_up_bot'){
         return  bot.sendMessage(chatId, "эта команда работает только в лс бота!")
       } 
       if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
-        return  bot.sendMessage(chatId, `${textHelp}`)
-      } 
-          
+        return  bot.sendMessage(chatId, textHelp)
+      }     
         // чтоб не юзали в лс бота
-        if(chatTypeBot === 'private' && text === '/elo@Elo_up_bot'){
-           return bot.sendMessage(chatId, `${DisTextBot}`)
-        }
-        if(chatTypeBot === 'private' && text === '/top_elo@Elo_up_bot'){
-            return bot.sendMessage(chatId, `${DisTextBot}`)
-        }
-        if (chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/elo') {
-            return bot.sendMessage(chatId, 'Я работаю только в чатах(группах)')  
-        }
-        if (chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/lvl') {
-            return bot.sendMessage(chatId, 'Я работаю только в чатах(группах)')
-        }
-        if (chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/top_elo') {
-            return bot.sendMessage(chatId, 'Я работаю только в чатах(группах)')
-        }
-        if (chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top') {
-            return bot.sendMessage(chatId, 'в разработке')
-        }
-        
-              
+        chatType === 'private' && text === '/elo@Elo_up_bot' ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/top_elo@Elo_up_bot' 
+        ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/elo' 
+        ? bot.sendMessage(chatId, DisTextBot) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/lvl' 
+        ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/top_elo' 
+        ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top' 
+        ? bot.sendMessage(chatId, 'в разработке') : "eror";            
     })
     
 }
