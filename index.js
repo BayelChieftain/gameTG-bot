@@ -3,7 +3,23 @@ const TelegramApi = require('node-telegram-bot-api')
 const token = '5937518154:AAGU2UQuHL8jFw-ZfiX8xLjeqWLU9Wb0JOw'
 
 const bot = new TelegramApi(token, {polling: true})
-
+// подключение mysql
+const mysql = require('mysql');
+// config DB
+const conn = mysql.createConnection({
+  host: "bayel.mysql.tools",
+  user: "bayel",
+  database: "elo_bot",
+  password: "zazazaza"
+});
+ conn.connect( err => {
+ if (err) {
+  console.log(err);
+  return err;
+ } else {
+  console.log('Database ------ OK');
+ }
+})
 
 const start = () => {
     bot.on('message', msg => {
@@ -18,8 +34,8 @@ const start = () => {
         var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
         var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
         const DisTextBot = 'Попробуй эту команду в чате или группе!';
-        const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`
-        const textPrivate = 'Я работаю только в чатах(группах)'
+        const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`;
+        const textPrivate = 'Я работаю только в чатах(группах)';
         // получение данных 
         const chats = {};
         console.log(msg)
@@ -47,15 +63,13 @@ const start = () => {
       if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
         return  bot.sendMessage(chatId, textHelp)
       }     
-        // чтоб не юзали в лс бота
+        // none private commands
         chatType === 'private' && text === '/elo@Elo_up_bot' ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/top_elo@Elo_up_bot' 
         ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/elo' 
         ? bot.sendMessage(chatId, DisTextBot) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/lvl' 
         ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/top_elo' 
         ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top' 
         ? bot.sendMessage(chatId, 'в разработке') : "eror";            
-    })
-    
+    }) 
 }
-
 start()

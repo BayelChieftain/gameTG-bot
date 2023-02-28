@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mysql": "^2.18.1",
     "node-telegram-bot-api": "^0.61.0",
     "nodemon": "^2.0.20"
   }
