@@ -31,11 +31,18 @@ const start = () => {
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
          // константы текста
-        var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
-        var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
-        const DisTextBot = 'Попробуй эту команду в чате или группе!';
-        const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`;
-        const textPrivate = 'Я работаю только в чатах(группах)';
+        const fullText = {
+          textStart: `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`,
+          textHelp: `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`,
+          DisTextBot: 'Попробуй эту команду в чате или группе!',
+          textTop10: `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`,
+          textPrivate: 'Я работаю только в чатах(группах)'
+        }
+       // var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
+       // var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
+       // const DisTextBot = 'Попробуй эту команду в чате или группе!';
+       // const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`;
+       // const textPrivate = 'Я работаю только в чатах(группах)';
         // получение данных 
         const chats = {};
         console.log(msg)
@@ -46,7 +53,7 @@ const start = () => {
     
       minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
         // команды старта
-        text === '/start' ? bot.sendMessage(chatId, `${textStart}`) : text === '/help' ? bot.sendMessage(chatId, `${textHelp}`) : "eror";
+        text === '/start' ? bot.sendMessage(chatId, fullText.textStart) : text === '/help' ? bot.sendMessage(chatId, fullText.textHelp) : "eror";
        // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
         return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ❗ elo. \n Ты занимаешь ❗ место в топе \n Следующая попытка завтра!`)
@@ -61,7 +68,7 @@ const start = () => {
         return  bot.sendMessage(chatId, "эта команда работает только в лс бота!")
       } 
       if (chatTypeBot !== 'private' && text === '/help@Elo_up_bot'){
-        return  bot.sendMessage(chatId, textHelp)
+        return  bot.sendMessage(chatId, fullText.textHelp)
       }     
         // none private commands
         chatType === 'private' && text === '/elo@Elo_up_bot' ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/top_elo@Elo_up_bot' 
