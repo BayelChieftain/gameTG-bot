@@ -3,15 +3,17 @@ const TelegramApi = require('node-telegram-bot-api')
 const token = '5937518154:AAGU2UQuHL8jFw-ZfiX8xLjeqWLU9Wb0JOw'
 
 const bot = new TelegramApi(token, {polling: true})
-// подключение mysql
+  // подключение mysql
 const mysql = require('mysql');
+ // получение данных 
+ const chats = {};
 // config DB
 const conn = mysql.createConnection({
-  host: "bayel.mysql.tools",
-  user: "bayel",
+  host: "localhost",
+  user: "root",
   database: "elo_bot",
-  password: "zazazaza"
-});
+  password: ''
+ });
  conn.connect( err => {
  if (err) {
   console.log(err);
@@ -20,6 +22,20 @@ const conn = mysql.createConnection({
   console.log('Database ------ OK');
  }
 })
+
+let query = "SELECT * FROM user";
+conn.query(query, (err, result)=> {
+  console.log(err)
+  console.log(result)
+});
+
+
+
+
+
+
+
+
 
 const start = () => {
     bot.on('message', msg => {
@@ -30,7 +46,8 @@ const start = () => {
         const chatType = msg.chat.type;
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
-         // константы текста
+        const dbELO = msg.RowDataPacket;
+        // константы текста
         const fullText = {
           textStart: `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`,
           textHelp: `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`,
@@ -49,8 +66,7 @@ const start = () => {
         //  game
        let minysORplus = Math.ceil(Math.random() * 2);
        let upAndDown;
-       chats[chatId] = minysORplus;
-    
+      
       minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
         // команды старта
         text === '/start' ? bot.sendMessage(chatId, fullText.textStart) : text === '/help' ? bot.sendMessage(chatId, fullText.textHelp) : "eror";
