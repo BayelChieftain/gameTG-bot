@@ -6,7 +6,7 @@ const bot = new TelegramApi(token, {polling: true})
   // подключение mysql
 const mysql = require('mysql');
  // получение данных 
- const chats = {};
+ //const chats = {};
 // config DB
 const conn = mysql.createConnection({
   host: "localhost",
@@ -26,13 +26,15 @@ const conn = mysql.createConnection({
 let query = "SELECT * FROM user";
 conn.query(query, (err, result)=> {
   console.log(err)
-  console.log(result)
+  console.log(result);
 });
-
-
-
-
-
+//let createUser = `INSERT INTO user( surname, elo) VALUES ('test 3',100)`;
+//if (true){
+//function f(){
+  
+ // conn.query(createUser,)
+//}
+//f()}
 
 
 
@@ -46,7 +48,31 @@ const start = () => {
         const chatType = msg.chat.type;
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
-        const dbELO = msg.RowDataPacket;
+        // cmd for database
+     //   let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 0)`;
+     //   let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = ${chatUserName}`
+       // let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = ${chatUserName}`
+      //  let newUser = conn.query(createUser,)
+         const cmdDatabase = {
+          createUser: `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 0)`,
+          loseElo: `UPDATE user SET elo = elo + 25 WHERE surname = ${chatUserName}`,
+          winElo: `UPDATE user SET elo = elo - 25 WHERE surname = ${chatUserName}`,
+          isone: false,
+          newUser: 
+          function (){
+            conn.query(this.createUser,)
+            isone = true;
+          }
+        }
+        // DB
+       function cnua(){
+        if (!cmdDatabase.isone) {
+          () => {
+            cmdDatabase.newUser()
+            
+          }
+        }}
+        
         // константы текста
         const fullText = {
           textStart: `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`,
@@ -55,25 +81,32 @@ const start = () => {
           textTop10: `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`,
           textPrivate: 'Я работаю только в чатах(группах)'
         }
-       // var textStart = `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`;
-       // var textHelp = `Команды бота: \n /elo - Увеличить/уменьшить Elo \n /lvl - узнать свой уровень \n /top_elo - Топ 10 Elo игроков \n /global_top - Глобальный Топ 10 \n \n Контакты: \n Админ: @qqQuestion`;
-       // const DisTextBot = 'Попробуй эту команду в чате или группе!';
-       // const textTop10 = `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`;
-       // const textPrivate = 'Я работаю только в чатах(группах)';
+        
         // получение данных 
-        const chats = {};
+       // const chats = {};
         console.log(msg)
         //  game
        let minysORplus = Math.ceil(Math.random() * 2);
        let upAndDown;
-      
+       
       minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
         // команды старта
         text === '/start' ? bot.sendMessage(chatId, fullText.textStart) : text === '/help' ? bot.sendMessage(chatId, fullText.textHelp) : "eror";
        // команды группы
+       
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
+     // создание ноовго ююзера в таблице
+      cnua()
+
+      //  игра +25 или -25
+     
+      // minysORplus === 1 ? conn.query(winElo,) : conn.query(loseElo,);
+
         return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ❗ elo. \n Ты занимаешь ❗ место в топе \n Следующая попытка завтра!`)
       } 
+     
+     
+     
       if (chatTypeBot !== 'private' && text === '/lvl@Elo_up_bot'){
         return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ❗`)
       } 
