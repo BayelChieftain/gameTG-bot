@@ -29,12 +29,12 @@ conn.query(query, (err, result)=> {
   console.log(result);
 });
 //let createUser = `INSERT INTO user( surname, elo) VALUES ('test 3',100)`;
-//if (true){
-//function f(){
+// if (true){
+// function f(){
   
- // conn.query(createUser,)
-//}
-//f()}
+//   conn.query(createUser,)
+// }
+// f()}
 
 
 
@@ -49,30 +49,30 @@ const start = () => {
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
         // cmd for database
-     //   let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 0)`;
-     //   let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = ${chatUserName}`
-       // let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = ${chatUserName}`
-      //  let newUser = conn.query(createUser,)
-         const cmdDatabase = {
-          createUser: `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 0)`,
-          loseElo: `UPDATE user SET elo = elo + 25 WHERE surname = ${chatUserName}`,
-          winElo: `UPDATE user SET elo = elo - 25 WHERE surname = ${chatUserName}`,
-          isone: false,
-          newUser: 
-          function (){
-            conn.query(this.createUser,)
-            isone = true;
-          }
-        }
-        // DB
-       function cnua(){
-        if (!cmdDatabase.isone) {
-          () => {
-            cmdDatabase.newUser()
-            
-          }
-        }}
         
+        let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 1)`;
+        let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = '${chatUserName}'`;
+        let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = '${chatUserName}'`;
+        let newUser = conn.query(createUser,);
+        let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
+        var isone = false;
+       let gg = conn.query(eloCount,)
+       
+        
+        
+        // DB
+        function uplis(){
+           {
+            () => {
+              conn.query(createUser,)
+              isone = true;}
+            }}
+          function eloText(){
+             
+               return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${gg} elo. \n\n Следующая попытка завтра!`);
+            }
+          
+          
         // константы текста
         const fullText = {
           textStart: `Привет! я бот для чатов(групп) \n  \n ❗Бот работает только в чатах. \n ❗Раз в 24 часа игрок может прописать команду    /elo в ответ получит от Бота рандомно число \n ❗Рандом работает  -25 elo или +25 elo \n \n Если есть вопросы пиши команду:  /help`,
@@ -84,7 +84,7 @@ const start = () => {
         
         // получение данных 
        // const chats = {};
-        console.log(msg)
+       console.log(msg)
         //  game
        let minysORplus = Math.ceil(Math.random() * 2);
        let upAndDown;
@@ -96,17 +96,17 @@ const start = () => {
        
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
      // создание ноовго ююзера в таблице
-      cnua()
-
+       uplis()
+       
+          
       //  игра +25 или -25
      
       // minysORplus === 1 ? conn.query(winElo,) : conn.query(loseElo,);
-
-        return bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ❗ elo. \n Ты занимаешь ❗ место в топе \n Следующая попытка завтра!`)
+      setTimeout(eloText, 999)
       } 
      
      
-     
+     // check my lvl
       if (chatTypeBot !== 'private' && text === '/lvl@Elo_up_bot'){
         return  bot.sendMessage(chatId, `@${chatUserName}, твой уровень сейчас равен ❗`)
       } 
