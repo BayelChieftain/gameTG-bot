@@ -5,8 +5,7 @@ const token = '5937518154:AAGU2UQuHL8jFw-ZfiX8xLjeqWLU9Wb0JOw'
 const bot = new TelegramApi(token, {polling: true})
   // подключение mysql
 const mysql = require('mysql');
- // получение данных 
- //const chats = {};
+
 // config DB
 const conn = mysql.createConnection({
   host: "localhost",
@@ -36,6 +35,13 @@ conn.query(query, (err, result)=> {
 // }
 // f()}
 
+//  
+// let eloCount2 = "SELECT elo FROM user WHERE surname = 'test'";
+// let ggg = conn.query(eloCount2,(err, result) =>{
+//   console.log(err)
+//   let f2 = (result[0]['elo'])
+//   console.log(f2)
+// })
 
 
 
@@ -53,23 +59,31 @@ const start = () => {
         let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 1)`;
         let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = '${chatUserName}'`;
         let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = '${chatUserName}'`;
-        let newUser = conn.query(createUser,);
+      //  let newUser = conn.query(createUser,);
         let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
+        let userCount;
         var isone = false;
-       let gg = conn.query(eloCount,)
        
-        
+      
         
         // DB
+        function addUser(){
+          conn.query(createUser,)
+        }
         function uplis(){
-           {
+           
             () => {
               conn.query(createUser,)
               isone = true;}
-            }}
-          function eloText(){
-             
-               return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${gg} elo. \n\n Следующая попытка завтра!`);
+            }
+              function eloText(){
+                // получение значение "elo" из базыданных
+              let eloNumb = conn.query(eloCount,(err, result) =>{
+                console.log(err)
+                let eloNumb2 = (result[0]['elo'])
+                return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${eloNumb2} elo. \n\n Следующая попытка завтра!`);
+              })
+               
             }
           
           
@@ -96,14 +110,14 @@ const start = () => {
        
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
      // создание ноовго ююзера в таблице
-       uplis()
-       
+    //  conn.query(createUser,)  
+     addUser()
           
       //  игра +25 или -25
      
       // minysORplus === 1 ? conn.query(winElo,) : conn.query(loseElo,);
       setTimeout(eloText, 999)
-      } 
+      };
      
      
      // check my lvl
@@ -120,11 +134,11 @@ const start = () => {
         return  bot.sendMessage(chatId, fullText.textHelp)
       }     
         // none private commands
-        chatType === 'private' && text === '/elo@Elo_up_bot' ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/top_elo@Elo_up_bot' 
-        ? bot.sendMessage(chatId, DisTextBot) : chatType === 'private' && text === '/elo' 
-        ? bot.sendMessage(chatId, DisTextBot) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/lvl' 
-        ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/top_elo' 
-        ? bot.sendMessage(chatId, textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top' 
+        chatType === 'private' && text === '/elo@Elo_up_bot' ? bot.sendMessage(chatId, fullText.DisTextBot) : chatType === 'private' && text === '/top_elo@Elo_up_bot' 
+        ? bot.sendMessage(chatId, fullText.DisTextBot) : chatType === 'private' && text === '/elo' 
+        ? bot.sendMessage(chatId, fullText.DisTextBot) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/lvl' 
+        ? bot.sendMessage(chatId, fullText.textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/top_elo' 
+        ? bot.sendMessage(chatId, fullText.textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top' 
         ? bot.sendMessage(chatId, 'в разработке') : "eror";            
     }) 
 }
