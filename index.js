@@ -38,25 +38,16 @@ const start = () => {
         const chatTypeSuper = msg.chat.type;
         const chatTypeBot = msg.chat.type;
         // cmd for database
-        
         let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 1)`;
         let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = '${chatUserName}'`;
         let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = '${chatUserName}'`;
       //  let newUser = conn.query(createUser,);
         let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
-        let userSurname = `SELECT  surname FROM user WHERE surname = '${chatUserName}'`
-        let userCount;
-       
-       
-      
-        
+        let userSurname = `SELECT  surname FROM user WHERE surname = '${chatUserName}'`;
         // DB
         function addUser(){
-          
         //  conn.query(createUser,)
-    
         }
-    
               function eloText(){
                 // получение значение "elo" из базыданных
               let eloNumb = conn.query(eloCount,(err, result) =>{
@@ -73,7 +64,7 @@ const start = () => {
           DisTextBot: 'Попробуй эту команду в чате или группе!',
           textTop10: `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`,
           textPrivate: 'Я работаю только в чатах(группах)'
-        }
+        };
         // получение данных 
        console.log(msg)
         //  game
