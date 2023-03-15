@@ -68,8 +68,7 @@ const start = () => {
           textTop10: `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`,
           textPrivate: 'Я работаю только в чатах(группах)'
         }
-
-       
+     
         // получение данных 
        console.log(msg)
         //  game
