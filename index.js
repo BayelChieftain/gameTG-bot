@@ -66,7 +66,6 @@ const start = () => {
           textPrivate: 'Я работаю только в чатах(группах)'
         }
 
-       
         // получение данных 
        console.log(msg)
         //  game
