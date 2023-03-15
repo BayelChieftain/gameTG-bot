@@ -22,14 +22,14 @@ const conn = mysql.createConnection({
  }
 })
 
-let query = "SELECT * FROM user";
-conn.query(query, (err, result)=> {
-  console.log(err)
-  console.log(result);
-});
+// let query = "SELECT * FROM user";
+// conn.query(query, (err, result)=> {
+//   console.log(err)
+//   console.log(result);
+// });
 
 const start = () => {
-    bot.on('message', msg => {
+    bot.on('message',async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
         const chatFirstName = msg.from.first_name;
@@ -41,21 +41,27 @@ const start = () => {
         let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 1)`;
         let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = '${chatUserName}'`;
         let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = '${chatUserName}'`;
-      //  let newUser = conn.query(createUser,);
+       // let newUser = conn.query(createUser,);
         let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
         let userSurname = `SELECT  surname FROM user WHERE surname = '${chatUserName}'`;
-        // DB
-        function addUser(){
-        //  conn.query(createUser,)
+       // let isnul = conn.query(userSurname,)
+        
+        // DB 
+        function addUser(tr){
+          if (tr == chatUserName){
+            bot.sendMessage(chatId, "Профиль успешно создан!")
+            conn.query(createUser,)
+          } 
         }
-              function eloText(){
+        
+    
+        function eloText(){
                 // получение значение "elo" из базыданных
               let eloNumb = conn.query(eloCount,(err, result) =>{
                 console.log(err)
                 let eloNumb2 = (result[0]['elo'])
                 return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${eloNumb2} elo. \n\n Следующая попытка завтра!`);
               })
-               
             }
         // константы текста
         const fullText = {
@@ -66,6 +72,7 @@ const start = () => {
           textPrivate: 'Я работаю только в чатах(группах)'
         }
 
+        
         // получение данных 
        console.log(msg)
         //  game
@@ -75,10 +82,17 @@ const start = () => {
       minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
         // команды старта
         text === '/start' ? bot.sendMessage(chatId, fullText.textStart) : text === '/help' ? bot.sendMessage(chatId, fullText.textHelp) : "eror";
-       // команды группы
+       if (text === '/addprofile@Elo_up_bot' && chatType == 'group'){
+          bot.sendMessage(chatId, "эта команда работает в лс бота!")
+       }
+       // лс с ботом
+       if (text === '/addprofile' && chatType == 'private'){
+       addUser(chatUserName)
+     };
        
+       
+        // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
-          
       //  игра +25 или -25
      
       // minysORplus === 1 ? conn.query(winElo,) : conn.query(loseElo,);
