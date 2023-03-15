@@ -22,14 +22,14 @@ const conn = mysql.createConnection({
  }
 })
 
-let query = "SELECT * FROM user";
-conn.query(query, (err, result)=> {
-  console.log(err)
-  console.log(result);
-});
+// let query = "SELECT * FROM user";
+// conn.query(query, (err, result)=> {
+//   console.log(err)
+//   console.log(result);
+// });
 
 const start = () => {
-    bot.on('message', msg => {
+    bot.on('message',async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
         const chatFirstName = msg.from.first_name;
@@ -44,13 +44,16 @@ const start = () => {
        // let newUser = conn.query(createUser,);
         let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
         let userSurname = `SELECT  surname FROM user WHERE surname = '${chatUserName}'`;
-        let isnul = conn.query(userSurname,)
+       // let isnul = conn.query(userSurname,)
         
-        // DB
-
-        function addUser(){
-          
+        // DB 
+        function addUser(tr){
+          if (tr == chatUserName){
+            bot.sendMessage(chatId, "Профиль успешно создан!")
+            conn.query(createUser,)
+          } 
         }
+        
               function eloText(){
                 // получение значение "elo" из базыданных
               let eloNumb = conn.query(eloCount,(err, result) =>{
@@ -58,7 +61,6 @@ const start = () => {
                 let eloNumb2 = (result[0]['elo'])
                 return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${eloNumb2} elo. \n\n Следующая попытка завтра!`);
               })
-               
             }
         // константы текста
         const fullText = {
@@ -68,7 +70,8 @@ const start = () => {
           textTop10: `Топ 10 игроков \n \n 1| ${chatFirstName} \n 2| ${chatFirstName} \n 3| ${chatFirstName} \n 4| ${chatFirstName} \n 5| ${chatFirstName} \n 6| ${chatFirstName} \n 7| ${chatFirstName} \n 8| ${chatFirstName} \n 9| ${chatFirstName} \n 10| ${chatFirstName}`,
           textPrivate: 'Я работаю только в чатах(группах)'
         }
-     
+
+        
         // получение данных 
        console.log(msg)
         //  game
@@ -83,8 +86,9 @@ const start = () => {
        }
        // лс с ботом
        if (text === '/addprofile' && chatType == 'private'){
-      
+       addUser(chatUserName)
      };
+       
        
         // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
