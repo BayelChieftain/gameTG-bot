@@ -41,12 +41,15 @@ const start = () => {
         let createUser = `INSERT INTO user(surname, elo) VALUES ('${chatUserName}', 1)`;
         let loseElo = `UPDATE user SET elo = elo + 25 WHERE surname = '${chatUserName}'`;
         let winElo = `UPDATE user SET elo = elo - 25 WHERE surname = '${chatUserName}'`;
-      //  let newUser = conn.query(createUser,);
+       // let newUser = conn.query(createUser,);
         let eloCount = `SELECT elo FROM user WHERE surname = '${chatUserName}'`;
         let userSurname = `SELECT  surname FROM user WHERE surname = '${chatUserName}'`;
+        let isnul = conn.query(userSurname,)
+        
         // DB
+
         function addUser(){
-        //  conn.query(createUser,)
+          
         }
               function eloText(){
                 // получение значение "elo" из базыданных
@@ -76,10 +79,16 @@ const start = () => {
       minysORplus === 1 ? upAndDown = "увеличился" : upAndDown = "уменьшился";
         // команды старта
         text === '/start' ? bot.sendMessage(chatId, fullText.textStart) : text === '/help' ? bot.sendMessage(chatId, fullText.textHelp) : "eror";
-       // команды группы
+       if (text === '/addprofile@Elo_up_bot' && chatType == 'group'){
+          bot.sendMessage(chatId, "эта команда работает в лс бота!")
+       }
+       // лс с ботом
+       if (text === '/addprofile' && chatType == 'private'){
+      
+     };
        
+        // команды группы
        if (chatTypeBot !== 'private' && text === '/elo@Elo_up_bot'){
-          
       //  игра +25 или -25
      
       // minysORplus === 1 ? conn.query(winElo,) : conn.query(loseElo,);
