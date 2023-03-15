@@ -54,7 +54,8 @@ const start = () => {
           } 
         }
         
-              function eloText(){
+    
+        function eloText(){
                 // получение значение "elo" из базыданных
               let eloNumb = conn.query(eloCount,(err, result) =>{
                 console.log(err)
