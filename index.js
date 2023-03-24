@@ -22,10 +22,10 @@ const conn = mysql.createConnection({
  }
 })
 
-// let query = "SELECT * FROM user";
-// conn.query(query, (err, result)=> {
-//   console.log(err)
-//   console.log(result);
+//  let query = "SELECT * FROM user ";
+//  conn.query(query, (err, result)=> {
+//    console.log(err)
+//    console.log(result);
 // });
 
 const start = () => {
@@ -56,12 +56,19 @@ const start = () => {
         
     
         function eloText(){
-                // получение значение "elo" из базыданных
-              let eloNumb = conn.query(eloCount,(err, result) =>{
-                console.log(err)
-                let eloNumb2 = (result[0]['elo'])
-                return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${eloNumb2} elo. \n\n Следующая попытка завтра!`);
-              })
+          try {
+            // получение значение "elo" из базыданных
+            let eloNumb = conn.query(eloCount,(err, result) =>{
+              console.log(err)
+              let eloNumb2 = (result[0]['elo'])
+              eloNumb2 == true;
+              return  bot.sendMessage(chatId, `@${chatUserName}, твой рейтинг ${upAndDown} на 25 elo. \n Теперь скилл равен ${eloNumb2} elo. \n\n Следующая попытка завтра!`);
+            }) 
+          } catch{
+           return bot.sendMessage(chatId, "вы еще не создали профиль! \n попробуйте команду /addprofile в лс бота!")
+          }
+          
+              
             }
         // константы текста
         const fullText = {
@@ -120,5 +127,6 @@ const start = () => {
         ? bot.sendMessage(chatId, fullText.textPrivate) : chatTypeSuper !== 'supergroup' && chatType !== 'group' && text === '/global_top' 
         ? bot.sendMessage(chatId, 'в разработке') : "eror";            
     }) 
+
 }
 start()
